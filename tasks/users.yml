@@ -1,0 +1,23 @@
+---
+- name: Ensure users
+  user:
+    name: '{{ item.name }}'
+    state: '{{ item.state | default(ssh_default_user_state) }}'
+    group: '{{ item.group | default(ssh_default_user_group) }}'
+  with_items: ssh_users
+
+- name: Ensure Git SSH key's are available
+  run_once: true
+  delegate_to: 127.0.0.1
+  get_url:
+    url: '{{ ssh_git_url }}/{{ item.name }}.keys'
+    dest: '/tmp/{{ item.name }}.authorized_keys'
+    force: true
+  with_items: '{{ ssh_users }}'
+  when: ssh_git_url is defined
+
+- name: Ensure authorized_keys file
+  authorized_key:
+    user: '{{ item.name }}'
+    key: '{{ lookup("file", "/tmp/"+ item.name +".authorized_keys") }}'
+  with_items: ssh_users

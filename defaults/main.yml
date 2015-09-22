@@ -1,0 +1,10 @@
+---
+ssh_package_name: openssh-server
+ssh_package_state: installed
+ssh_service_name: sshd
+ssh_service_state: started
+ssh_service_enabled: true
+ssh_default_user_group: wheel
+ssh_default_user_state: present
+ssh_users: []
+ssh_

@@ -1,0 +1,9 @@
+---
+- include: install.yml
+  tags: ssh_install
+
+- include: service.yml
+  tags: ssh_service
+
+- include: users.yml
+  tags: ssh_users
