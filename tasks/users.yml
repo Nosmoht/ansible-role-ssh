@@ -13,13 +13,13 @@
     url: '{{ ssh_git_url }}/{{ item.name }}.keys'
     dest: '/tmp/{{ item.name }}.authorized_keys'
     force: true
-  when: '"{{ item.state | default(ssh_default_user_state)}}" == "present"'
+  when: '"{{ item.state | default(ssh_default_user_state)}}" == "present" and item.key is not defined'
   with_items: '{{ ssh_users }}'
   when: ssh_git_url is defined
 
 - name: Ensure authorized_keys file
   authorized_key:
     user: '{{ item.name }}'
-    key: '{{ lookup("file", "/tmp/"+ item.name +".authorized_keys") }}'
+    key: '{{ item.key | default(lookup("file", "/tmp/"+ item.name +".authorized_keys")) }}'
   when: '"{{ item.state | default(ssh_default_user_state) }}" == "present"'
   with_items: ssh_users
