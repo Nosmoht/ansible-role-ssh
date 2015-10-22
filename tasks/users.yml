@@ -13,6 +13,7 @@
   get_url:
     url: '{{ ssh_git_url }}/{{ item.name }}.keys'
     dest: '/tmp/{{ item.name }}.authorized_keys'
+    mode: '0664'
     force: true
   when: '"{{ item.state | default(ssh_default_user_state)}}" == "present" and item.key is not defined'
   with_items: '{{ ssh_users }}'
