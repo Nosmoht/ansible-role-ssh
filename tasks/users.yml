@@ -10,6 +10,7 @@
 - name: Ensure Git SSH key's are available
   run_once: true
   connection: local
+  become: false
   get_url:
     url: '{{ ssh_git_url }}/{{ item.name }}.keys'
     dest: '/tmp/{{ item.name }}.authorized_keys'
