@@ -4,7 +4,7 @@
     name: '{{ item.name }}'
     state: '{{ item.state | default(ssh_default_user_state) }}'
     group: '{{ item.group | default(ssh_default_user_group) }}'
-#    remove: '{% if item.state | default(ssh_default_user_state) == "absent" %}yes{% else %}no{% endif %}'
+    remove: '{% if item.state | default(ssh_default_user_state) == "absent" %}yes{% else %}no{% endif %}'
   with_items: ssh_users
 
 - name: Ensure Git SSH key's are available
