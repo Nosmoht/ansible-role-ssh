@@ -15,9 +15,8 @@
     dest: '/tmp/{{ item.name }}.authorized_keys'
     mode: '0664'
     force: true
-  when: '"{{ item.state | default(ssh_default_user_state)}}" == "present" and item.key is not defined'
+  when: '"{{ item.state | default(ssh_default_user_state)}}" == "present" and item.key is not defined and ssh_git_url is defined'
   with_items: '{{ ssh_users }}'
-  when: ssh_git_url is defined
 
 - name: Ensure authorized_keys file
   authorized_key:
