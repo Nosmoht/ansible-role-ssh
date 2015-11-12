@@ -27,11 +27,16 @@ really useful.
 | ssh_users | Dictionary containing user information | [] |
 
 # Usage
+As some tasks require root privileges one should invoke the role with become
+using either sudo or su.
 
 Update SSH package
 ```yaml
 ---
 - hosts: servers
+  become: true
+  become_user: root
+  become_method: sudo
   roles:
   - role: ssh
     ssh_package_state: latest
@@ -41,6 +46,9 @@ Create a user within group wheel and fetch the public SSH keys from Github.com
 ```yaml
 ---
 - hosts: servers
+  become: true
+  become_user: root
+  become_method: sudo
   roles:
   - role: ssh
     ssh_users:
@@ -52,6 +60,9 @@ as primary group
 ```yaml
 ---
 - hosts: servers
+  become: true
+  become_user: root
+  become_method: sudo
   roles:
   - role: ssh
     ssh_git_url: http://git.example.com
@@ -65,6 +76,9 @@ Ensure a user does not exist
 ```yaml
 ---
 - hosts: servers
+  become: true
+  become_user: root
+  become_method: sudo
   roles:
   - role: ssh
     ssh_users:
