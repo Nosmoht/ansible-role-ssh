@@ -7,3 +7,6 @@ ssh_service_enabled: true
 ssh_default_user_group: wheel
 ssh_default_user_state: present
 ssh_users: []
+ssh_sshd_config:
+- name: PermitRootLogin
+  value: 'no'

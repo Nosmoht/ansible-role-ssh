@@ -1,0 +1,5 @@
+---
+- name: ssh restart
+  service:
+    name: '{{ ssh_service_name }}'
+    state: restarted

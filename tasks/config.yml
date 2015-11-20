@@ -1,1 +1,8 @@
 ---
+- name: Ensure server config
+  lineinfile:
+    dest: '{{ ssh_sshd_config_file }}'
+    regexp: '^#?{{ item.name }}'
+    line: '{{ item.name }} {{ item.value }}'
+  with_items: ssh_sshd_config
+  notify: ssh restart
