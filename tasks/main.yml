@@ -1,6 +1,15 @@
 ---
+- include_vars: '{{ ansible_os_family }}.yml'
+  tags:
+  - ssh_install
+  - ssh_service
+  - ssh_config
+
 - include: install.yml
   tags: ssh_install
+
+- include: config.yml
+  tags: ssh_config
 
 - include: service.yml
   tags: ssh_service

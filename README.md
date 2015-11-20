@@ -6,11 +6,12 @@ ssh
 - [Usage](#usage)
 
 # Introduction
-Main prupose of this role is to update the SSH package as well as setting up
-user accounts and provide SSH keys in authorized_keys.
+Use this role to:
+- update the SSH package
+- configure SSH daemon options
+- ensure (create, update or remove) user accounts and deploy public SSH key in authorized_keys retrieved from Git server
 
-As SSH service must run to use Ansible on a remote host the installation is not
-really useful.
+__NOTE:__ By default the role ensures that root login via SSH is forbidden.
 
 # Variables
 
@@ -25,6 +26,7 @@ really useful.
 | ssh_default_user_state | Default state of created user | present |
 | ssh_git_url | URL of Git server used to fetch public keys | https://github.com |
 | ssh_users | Dictionary containing user information | [] |
+| ssh_sshd_config | List of name/value pairs to ensure | - name: PermitRootLogin\n  value: 'no' |
 
 # Usage
 As some tasks require root privileges one should invoke the role with become
@@ -35,8 +37,8 @@ Update SSH package
 ---
 - hosts: servers
   become: true
-  become_user: root
   become_method: sudo
+  become_user: root
   roles:
   - role: ssh
     ssh_package_state: latest
@@ -47,8 +49,8 @@ Create a user within group wheel and fetch the public SSH keys from Github.com
 ---
 - hosts: servers
   become: true
-  become_user: root
   become_method: sudo
+  become_user: root
   roles:
   - role: ssh
     ssh_users:
@@ -61,8 +63,8 @@ as primary group
 ---
 - hosts: servers
   become: true
-  become_user: root
   become_method: sudo
+  become_user: root
   roles:
   - role: ssh
     ssh_git_url: http://git.example.com
@@ -77,11 +79,25 @@ Ensure a user does not exist
 ---
 - hosts: servers
   become: true
-  become_user: root
   become_method: sudo
+  become_user: root
   roles:
   - role: ssh
     ssh_users:
     - name: jens
       state: absent
+```
+
+Ensure SSH daemon configuration
+```yaml
+---
+- hosts: servers
+  become: true
+  become_method: sudo
+  become_user: root
+  roles:
+  - role: ssh
+    ssh_sshd_config:
+    - name: PermitEmptyPasswords
+      value: 'no'
 ```
