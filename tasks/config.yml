@@ -5,4 +5,5 @@
     regexp: '^#?{{ item.name }}'
     line: '{{ item.name }} {{ item.value }}'
   with_items: ssh_sshd_config
+  when: ssh_sshd_config is defined
   notify: ssh restart
