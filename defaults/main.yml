@@ -11,3 +11,5 @@ ssh_users: []
 ssh_sshd_config:
 - name: PermitRootLogin
   value: 'no'
+- name: Protocol
+  value: 2
