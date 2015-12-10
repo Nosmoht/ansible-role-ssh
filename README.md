@@ -51,8 +51,24 @@ Create a user within group wheel and fetch the public SSH keys from Github.com
   become_user: root
   roles:
   - role: ssh
+    ssh_git_url: https://github.com
     ssh_users:
     - name: pinky
+```
+
+Create user pinky but use the public SSH key of user brain
+```yaml
+---
+- hosts: servers
+  become: true
+  become_method: sudo
+  become_user: root
+  roles:
+  - role: ssh
+    ssh_git_url: https://github.com
+    ssh_users:
+    - name: pinky
+      git_name: brain
 ```
 
 Create some admin users using an internal Git server to fetch keys and use _admin_
@@ -98,4 +114,6 @@ Ensure SSH daemon configuration
     ssh_sshd_config:
     - name: PermitEmptyPasswords
       value: 'no'
+    - name: Protocol
+      value: 2
 ```
