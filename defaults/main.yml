@@ -6,7 +6,6 @@ ssh_service_enabled: true
 ssh_sshd_config_file: /etc/ssh/sshd_config
 ssh_ssh_config_file: /etc/ssh/ssh_config
 ssh_allow_users:
-ssh_default_user_group: wheel
 ssh_default_user_state: present
 ssh_password_authentication: 'no'
 ssh_host_based_authentication: 'no'
