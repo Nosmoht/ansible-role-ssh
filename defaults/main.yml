@@ -5,9 +5,33 @@ ssh_service_state: started
 ssh_service_enabled: true
 ssh_sshd_config_file: /etc/ssh/sshd_config
 ssh_ssh_config_file: /etc/ssh/ssh_config
+ssh_allow_users:
 ssh_default_user_group: wheel
 ssh_default_user_state: present
+ssh_password_authentication: 'no'
+ssh_host_based_authentication: 'no'
+ssh_ignore_rhosts: 'yes'
+ssh_login_grace_time: 30s
+ssh_permit_empty_passwords: 'no'
+ssh_permit_root_login: 'no'
+ssh_protocol: 2
 ssh_users: []
 ssh_sshd_config:
+- name: AllowUsers
+  value: '{{ ssh_allow_users }}'
+- name: HostbasedAuthentication
+  value: '{{ ssh_host_based_authentication }}'
+- name: IgnoreRhosts
+  value: '{{ ssh_ignore_rhosts }}'
+- name: ListenAddress
+  value: '{{ ansible_ssh_host }}'
+- name: LoginGraceTime
+  value: '{{ ssh_login_grace_time }}'
+- name: PasswordAuthentication
+  value: '{{ ssh_password_authentication }}'
+- name: PermitEmptyPasswords
+  value: '{{ ssh_permit_empty_passwords }}'
 - name: PermitRootLogin
-  value: 'no'
+  value: '{{ ssh_permit_root_login }}'
+- name: Protocol
+  value: '{{ ssh_protocol }}'
