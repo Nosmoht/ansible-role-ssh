@@ -4,6 +4,6 @@
     dest: '{{ ssh_sshd_config_file }}'
     regexp: '^#?{{ item.name }}'
     line: '{% if item.value %}{{ item.name }} {{ item.value }}{% else %}#{{ item.name }}{% endif %}'
-  with_items: ssh_sshd_config
+  with_items: '{{ ssh_sshd_config }}'
   when: ssh_sshd_config is defined
   notify: ssh restart

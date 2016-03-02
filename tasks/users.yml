@@ -5,7 +5,7 @@
     state: '{{ item.state | default(ssh_default_user_state) }}'
     group: '{{ item.group | default(ssh_default_user_group) }}'
     remove: '{% if item.state | default(ssh_default_user_state) == "absent" %}yes{% else %}no{% endif %}'
-  with_items: ssh_users
+  with_items: '{{ ssh_users }}'
 
 - name: Ensure Git SSH
   run_once: true
@@ -28,11 +28,11 @@
     content: '{{ item.key }}'
     mode: '0664'
   when: item.key is defined
-  with_items: ssh_users
+  with_items: '{{ ssh_users }}'
 
 - name: Ensure authorized_keys
   authorized_key:
     user: '{{ item.name }}'
     key: '{{ lookup("file", "/tmp/"+ item.name +".authorized_keys") }}'
   when: '"{{ item.state | default(ssh_default_user_state) }}" == "present"'
-  with_items: ssh_users
+  with_items: '{{ ssh_users }}'
