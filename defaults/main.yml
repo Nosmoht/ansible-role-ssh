@@ -23,7 +23,7 @@ ssh_sshd_config:
 - name: IgnoreRhosts
   value: '{{ ssh_ignore_rhosts }}'
 - name: ListenAddress
-  value: '{{ ansible_ssh_host }}'
+  value: '{{ ansible_host }}'
 - name: LoginGraceTime
   value: '{{ ssh_login_grace_time }}'
 - name: PasswordAuthentication
