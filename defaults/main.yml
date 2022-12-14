@@ -1,5 +1,5 @@
 ---
-ssh_package_state: installed
+ssh_package_state: present
 ssh_service_name: sshd
 ssh_service_state: started
 ssh_service_enabled: true
