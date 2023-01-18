@@ -1,5 +1,12 @@
 ---
-- name: ssh restart
+- name: Restart SSH daemon
   service:
-    name: '{{ ssh_service_name }}'
+    name: "{{ ssh_service_name }}"
     state: restarted
+  become: true
+
+- name: Reload SSH daemon
+  service:
+    name: "{{ ssh_service_name }}"
+    state: reloaded
+  become: true

@@ -1,3 +1,6 @@
 ---
 - name: Ensure package
-  action: '{{ ansible_pkg_mgr }} pkg={{ ssh_package_name }} state={{ ssh_package_state }}'
+  ansible.builtin.package:
+    pkg: '{{ ssh_package_name }}'
+    state: '{{ ssh_package_state }}'
+  become: true

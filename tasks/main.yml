@@ -1,18 +1,30 @@
 ---
-- include_vars: '{{ ansible_os_family }}.yml'
+- name: Include OS specific variables
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
   tags:
-  - ssh_install
-  - ssh_service
-  - ssh_config
+    - ssh_config
+    - sshd_config
+    - ssh_install
+    - ssh_service
+    - ssh_users
 
-- include: install.yml
+- name: Include installation tasks
+  ansible.builtin.include_tasks: install.yml
   tags: ssh_install
 
-- include: config.yml
-  tags: ssh_config
+- name: Include configuration tasks
+  include_tasks: config.yml
+  tags:
+    - ssh_config
+    - sshd_config
 
-- include: service.yml
+- name: Include service tasks
+  include_tasks: service.yml
   tags: ssh_service
 
-- include: users.yml
+- name: Include user tasks
+  include_tasks: users.yml
   tags: ssh_users

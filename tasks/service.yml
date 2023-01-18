@@ -4,3 +4,4 @@
     name: '{{ ssh_service_name }}'
     state: '{{ ssh_service_state }}'
     enabled: '{{ ssh_service_enabled }}'
+  become: true
